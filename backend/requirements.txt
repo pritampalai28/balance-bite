@@ -1,0 +1,6 @@
+flask
+flask-cors
+pymongo
+firebase-admin
+python-dotenv
+reportlab
