@@ -5,19 +5,9 @@
 ## Overview
 BLANCE-BITE is a full-stack web application featuring a Next.js frontend and a Flask backend. It integrates with Firebase and MongoDB to provide real-time data and analytics features.
 
-## Tech Stack
 
-### Frontend
-- **Framework:** [Next.js 16](https://nextjs.org/) (React 19)
-- **Styling:** [Tailwind CSS 4](https://tailwindcss.com/)
-- **Charts:** Chart.js, React-Chartjs-2
-- **Auth/Backend Integration:** Firebase, Axios
 
-### Backend
-- **Framework:** [Flask](https://flask.palletsprojects.com/)
-- **Database:** MongoDB (PyMongo)
-- **Authentication:** Firebase Admin SDK
-- **Utilities:** Python-Dotenv, ReportLab (PDF Generation)
+
 
 ## Getting Started
 
@@ -52,7 +42,5 @@ BLANCE-BITE is a full-stack web application featuring a Next.js frontend and a F
     ```
     The backend runs on `http://127.0.0.1:5000` (default Flask port).
 
-## Project Structure
-- `frontend/`: Next.js source code (pages, components, context).
-- `backend/`: Flask application, data models, and API routes.
+
 
