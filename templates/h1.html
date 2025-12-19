@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: left;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 4px 0;
+            width: 100%;
+            position: fixed;
+            font-family: 'Lobster', cursive;
+            letter-spacing: 1px;
+            bottom: 0;
+        }
+
+        main {
+            margin-top: 60px;
+            padding: 20px;
+            flex: 1;
+            padding-bottom: 60px; /* Add padding to the bottom to avoid overlap with the footer */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .profile-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ff6347;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            margin-right: 20px;
+        }
+
+        .profile-link:hover {
+            background-color: #ff4500;
+        }
+
+        .profile-link img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 50px;
+            background: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 10px;
+            width: 250px;
+            z-index: 1000;
+        }
+
+        .profile-dropdown p {
+            color: #333;
+        }
+
+        .logout-button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 50px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #ff4500;
+            padding-right: 10px;
+        }
+
+        section {
+            background: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex: 1 1 calc(45% - 40px);
+            box-sizing: border-box;
+            min-width: 300px;
+            animation: fadeInUp 1s;
+        }
+
+        section h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .update-details {
+            display: flex;
+            justify-content: space-between;
+            background-color: #f7f7f7;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .update-details form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 50%;
+        }
+
+        .update-details label {
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .update-details input[type="number"],
+        .update-details select {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border 0.3s;
+        }
+
+        .update-details button[type="submit"] {
+            padding: 10px;
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .update-details button[type="submit"]:hover {
+            background-color: #ff4500;
+        }
+
+        .body-size-image {
+            width: 45%;
+            max-width: 300px;
+            margin-left: 20px;
+        }
+
+        .meal-plan {
+            padding: 20px;
+        }
+
+        .meal-plan ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .meal-plan li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .meal-plan li span {
+            display: inline-block;
+            width: 33.33%;
+            text-align: center;
+        }
+
+        .progress-graph {
+            padding: 20px;
+        }
+
+        .progress-graph canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        .progress-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .progress-form input[type="number"],
+        .progress-form input[type="text"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .progress-form button[type="submit"] {
+            padding: 10px;
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .progress-form button[type="submit"]:hover {
+            background-color: #ff4500;
+        }
+
+        /* Animations */
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tips-suggestions {
+            background: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .tips-suggestions form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tips-suggestions label {
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .tips-suggestions textarea {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border 0.3s;
+        }
+
+        .tips-suggestions button[type="submit"] {
+            padding: 10px;
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .tips-suggestions button[type="submit"]:hover {
+            background-color: #ff4500;
+        }
+
+        .workout-form {
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .download-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="profile-container">
+            <a class="profile-link" href="#" onclick="toggleProfileDropdown(event)">
+                {% if user.profile_picture %}
+                <img src="{{ url_for('uploaded_file', filename=user.profile_picture) }}" alt="Profile Picture">
+                {% else %}
+                {{ user.name[0].upper() }}
+                {% endif %}
+            </a>
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="dropdown-content">
+                    <p><strong>Name:</strong> {{ user.name }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Age:</strong> {{ user.age }}</p>
+                    <p><strong>Height:</strong> {{ user.height }} cm</p>
+                    <p><strong>Weight:</strong> {{ user.weight }} kg</p>
+                    <p><strong>Number of Meals per Day:</strong> {{ user.meals }}</p>
+                    <p><strong>Sex:</strong> {{ user.sex }}</p>
+                    <p><strong>Activity Level:</strong> {{ user.a_level }}</p>
+                </div>
+            </div>
+        </div>
+        <h1>Welcome, {{ user.name }}</h1>
+        <button class="logout-button"><a href="{{ url_for('logout') }}" style="color: white; text-decoration: none;">Logout</a></button>
+    </header>
+
+    <main>
+        <section class="update-details">
+            <h2>Update Details</h2>
+            <form method="POST" action="{{ url_for('user_dashboard') }}">
+                <!-- Weight Field -->
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" name="weight"
+                    value="{{ latest_update['weight'] if latest_update else user['weight'] }}" required>
+
+                <!-- Number of Meals Field -->
+                <label for="meals">Number of Meals per Day:</label>
+                <input type="number" id="meals" name="meals"
+                    value="{{ latest_update['meals'] if latest_update else user['meals'] }}" required>
+
+                <!-- Activity Level Dropdown -->
+                <label for="a_level">Activity Level:</label>
+                <select id="a_level" name="a_level" required>
+                    <option value="sedentary" {% if (latest_update['activity_level'] if latest_update else
+                        user['a_level'])=='sedentary' %}selected{% endif %}>Sedentary</option>
+                    <option value="lightly active" {% if (latest_update['activity_level'] if latest_update else
+                        user['a_level'])=='lightly active' %}selected{% endif %}>Lightly Active</option>
+                    <option value="moderately active" {% if (latest_update['activity_level'] if latest_update else
+                        user['a_level'])=='moderately active' %}selected{% endif %}>Moderately Active</option>
+                    <option value="very active" {% if (latest_update['activity_level'] if latest_update else
+                        user['a_level'])=='very active' %}selected{% endif %}>Very Active</option>
+                    <option value="super active" {% if (latest_update['activity_level'] if latest_update else
+                        user['a_level'])=='super active' %}selected{% endif %}>Super Active</option>
+                </select>
+
+                <button type="submit" name="generate_meal_plan" class="btn btn-primary">Generate Meal Plan</button>
+            </form>
+            <img id="bodySizeImage" class="body-size-image" src="" alt="Body Size Image">
+        </section>
+
+
+        <section class="meal-plan">
+            <h2>Meal Plan</h2>
+            {% if meal_plan %}
+            <ul>
+                {% for meal in meal_plan %}
+                <li>
+                    <span>Carbs: {{ meal.carbs }}g</span>
+                    <span>Protein: {{ meal.protein }}g</span>
+                    <span>Fat: {{ meal.fat }}g</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No meal plan available. Update your details to generate one.</p>
+            {% endif %}
+        </section>
+
+
+
+        <section class="workout-data">
+            <h2>Workout Data</h2>
+            <div class="workout-form">
+                <h3>Add Workout Data</h3>
+                <form id="workoutForm" onsubmit="addWorkoutData(event)">
+                    <label for="weekStart">Week Start Date:</label>
+                    <input type="date" id="weekStart" name="weekStart" required>
+
+                    <label for="workoutTypeWeek">Workout Type:</label>
+                    <select id="workoutTypeWeek" name="workoutTypeWeek" required>
+                        <option value="" disabled selected>Select Workout Type</option>
+                        <option value="steps">Steps</option>
+                        <option value="cycling">Cycling (km)</option>
+                        <option value="running">Running (km)</option>
+                        <option value="yoga">Yoga (minutes)</option>
+                        <option value="weightlifting">Weightlifting (kg)</option>
+                    </select>
+
+                    <label for="weekData">Enter Data for Each Day:</label>
+                    <div id="weekDays">
+                        <div>
+                            <label for="monday">Monday:</label>
+                            <input type="number" id="monday" name="monday" placeholder="Enter value">
+                        </div>
+                        <div>
+                            <label for="tuesday">Tuesday:</label>
+                            <input type="number" id="tuesday" name="tuesday" placeholder="Enter value">
+                        </div>
+                        <div>
+                            <label for="wednesday">Wednesday:</label>
+                            <input type="number" id="wednesday" name="wednesday" placeholder="Enter value">
+                        </div>
+                        <div>
+                            <label for="thursday">Thursday:</label>
+                            <input type="number" id="thursday" name="thursday" placeholder="Enter value">
+                        </div>
+                        <div>
+                            <label for="friday">Friday:</label>
+                            <input type="number" id="friday" name="friday" placeholder="Enter value">
+                        </div>
+                        <div>
+                            <label for="saturday">Saturday:</label>
+                            <input type="number" id="saturday" name="saturday" placeholder="Enter value">
+                        </div>
+                        <div>
+                            <label for="sunday">Sunday:</label>
+                            <input type="number" id="sunday" name="sunday" placeholder="Enter value">
+                        </div>
+                    </div>
+
+                    <button type="submit">Add Data</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="tips-suggestions">
+            <h2>Submit a Tip/Suggestion</h2>
+            <form method="post" action="{{ url_for('submit_suggestion') }}">
+            <label for="suggestion">Your Tip/Suggestion:</label>
+            <textarea id="suggestion" name="suggestion" rows="4" required></textarea>
+            <button type="submit">Submit</button>
+            <div style="margin-top: 20px;">
+                <button type="button"><a href="{{ url_for('user_reports') }}" style="text-decoration: none; color: white;">Download Report</a></button>
+                <button type="button" class="download-button"><a href="{{ url_for('download_weekly_report') }}" style="text-decoration: none; color: white;">Download Weekly Workout Report</a></button>
+            </div>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>If you currently smoke or consume alcohol, we encourage you to take the step toward a healthier lifestyle.
+            Consider quitting for your well-being and to achieve your full potential on this wellness journey.</p>
+        <p>For further help, visit: <a href="https://ntcp.mohfw.gov.in/" target="_blank">https://ntcp.mohfw.gov.in/</a></p>
+    </footer>
+    <script>
+        function addWorkoutData(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const form = document.getElementById('workoutForm');
+            const formData = new FormData(form);
+
+            const workoutTypeWeek = formData.get('workoutTypeWeek');
+            const weekStart = formData.get('weekStart');
+            const weekData = {
+                monday: parseFloat(formData.get('monday') || 0),
+                tuesday: parseFloat(formData.get('tuesday') || 0),
+                wednesday: parseFloat(formData.get('wednesday') || 0),
+                thursday: parseFloat(formData.get('thursday') || 0),

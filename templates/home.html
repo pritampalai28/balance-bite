@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalanceBite</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- FontAwesome CSS for social media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-bottom: 70px; /* Adjust as needed to accommodate the fixed footer */
+        }
+
+        .carousel-inner {
+            transition: opacity 0.5s;
+        }
+
+        .carousel-inner.carousel-item {
+            opacity: 1;
+        }
+
+        .carousel-inner.carousel-item.active {
+            opacity: 0.8;
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .hero-content {
+            background-color: rgba(246, 246, 246, 0.464);
+            padding: 20px;
+            border-radius: 10px;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            color: #333;
+            font-weight: bold;
+            animation: slideInDown 1s ease;
+        }
+
+        .hero-content p {
+            color: #000000;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero-content .btn-primary {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes slideInDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+            }
+        }
+
+        .features {
+            padding: 60px 0;
+        }
+
+        .features .card {
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .features .card:hover {
+            transform: translateY(-10px);
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+
+        .social-icons {
+            margin: 10px 0;
+        }
+
+        .social-icons a {
+            color: #fff;
+            margin: 0 10px;
+            font-size: 1.5em;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #007bff;
+        }
+
+        main {
+            flex: 1;
+            margin-bottom: 80px; /* Ensure content does not overlap with the fixed footer */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                BalanceBite
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ url_for('static', filename='images/14-days-clean-eating-meal-plan-1200-lede-601736337d914519bb5bf8eb83540da1.jpg') }}"
+                            alt="Healthy Food" class="img-fluid">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ url_for('static', filename='images/603e0e4816d64dbd8fd590c7_Webp.jpeg') }}"
+                            alt="Meal Plan" class="img-fluid">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ url_for('static', filename='images/61d5678fda6a5843161f7ab8_shopping-list-recipe-book-diet-plan-grocering-c-2021-08-26-17-17-06-utc-min.jpg') }}"
+                            alt="Fitness Tracking" class="img-fluid">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+            <div class="hero-content">
+                <h1>Welcome to Our Diet Planning Website</h1>
+                <p>Our website helps you plan your meals, track your fitness, and monitor your progress. Join us today
+                    to start your health journey!</p>
+                <a href="{{ url_for('signup') }}" class="btn btn-primary">Get Started</a>
+            </div>
+        </section>
+        <section class="features">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <img src="{{ url_for('static', filename='images/AdobeStock_212647287.jpg') }}"
+                                class="card-img-top" alt="Personalized Meal Plans">
+                            <div class="card-body">
+                                <h2 class="card-title">Personalized Meal Plans</h2>
+                                <p class="card-text">Get meal plans tailored to your body weight, age, and dietary
+                                    preferences.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <img src="{{ url_for('static', filename='images/calorie-counter-apps.jpg') }}"
+                                class="card-img-top" alt="Daily Logs">
+                            <div class="card-body">
+                                <h2 class="card-title">Daily Logs</h2>
+                                <p class="card-text">Log your daily meals and track your calorie intake easily.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <img src="{{ url_for('static', filename='images/how-to-track-diet-and-fitness.png') }}"
+                                class="card-img-top" alt="Fitness Tracking">
+                            <div class="card-body">
+                                <h2 class="card-title">Fitness Tracking</h2>
+                                <p class="card-text">Track your fitness activities and monitor your progress.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <div class="social-icons">
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer"><i
+                        class="fab fa-twitter"></i></a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><i
+                        class="fab fa-facebook"></i></a>
+            </div>
+            <p>&copy; 2024 Diet Planning Website. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.carousel').carousel({
+                interval: 3000
+            });
+        });
+    </script>
+</body>
+
+</html>
