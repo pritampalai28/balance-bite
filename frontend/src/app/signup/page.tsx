@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -7,6 +6,8 @@ import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
+import { motion } from "framer-motion";
+import { Dumbbell, User, Ruler, Weight, Utensils } from "lucide-react";
 
 export default function Signup() {
     const [email, setEmail] = useState("");
@@ -55,29 +56,46 @@ export default function Signup() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-orange-100 to-red-100 p-4">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">Sign Up</h2>
-                {error && <p className="text-red-500 mb-4">{error}</p>}
+        <div className="flex flex-col items-center justify-center min-h-screen bg-[#0B0D12] p-4 relative overflow-hidden">
+            {/* Background Glows */}
+            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
+
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-2xl w-full max-w-md relative z-10 my-10"
+            >
+                <div className="text-center mb-8">
+                    <h2 className="text-3xl font-bold text-white">Get Started</h2>
+                    <p className="text-gray-400 mt-2">Create your account to start your journey.</p>
+                </div>
+
+                {error && <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-xl mb-4 text-sm text-center">{error}</div>}
+
                 <form onSubmit={handleSignup} className="space-y-4">
-                    <input
-                        type="text"
-                        placeholder="Full Name"
-                        className="w-full p-2 border border-gray-300 rounded text-black"
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
+                    <div className="relative">
+                        <User className="absolute left-4 top-4 text-gray-500 h-5 w-5" />
+                        <input
+                            type="text"
+                            placeholder="Full Name"
+                            className="w-full pl-12 p-4 bg-[#13151b] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors"
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </div>
+
                     <input
                         type="email"
                         placeholder="Email"
-                        className="w-full p-2 border border-gray-300 rounded text-black"
+                        className="w-full p-4 bg-[#13151b] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors"
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                     <input
                         type="password"
                         placeholder="Password"
-                        className="w-full p-2 border border-gray-300 rounded text-black"
+                        className="w-full p-4 bg-[#13151b] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors"
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
@@ -86,38 +104,47 @@ export default function Signup() {
                         <input
                             type="number"
                             placeholder="Age"
-                            className="w-full p-2 border border-gray-300 rounded text-black"
+                            className="w-full p-4 bg-[#13151b] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors"
                             onChange={(e) => setAge(Number(e.target.value))}
                             required
                         />
-                        <input
-                            type="number"
-                            placeholder="Height (cm)"
-                            className="w-full p-2 border border-gray-300 rounded text-black"
-                            onChange={(e) => setHeight(Number(e.target.value))}
-                            required
-                        />
+                        <div className="relative">
+                            <Ruler className="absolute left-4 top-4 text-gray-500 h-4 w-4" />
+                            <input
+                                type="number"
+                                placeholder="Height (cm)"
+                                className="w-full pl-10 p-4 bg-[#13151b] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors"
+                                onChange={(e) => setHeight(Number(e.target.value))}
+                                required
+                            />
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
-                        <input
-                            type="number"
-                            placeholder="Weight (kg)"
-                            className="w-full p-2 border border-gray-300 rounded text-black"
-                            onChange={(e) => setWeight(Number(e.target.value))}
-                            required
-                        />
-                        <input
-                            type="number"
-                            placeholder="Meals per day"
-                            className="w-full p-2 border border-gray-300 rounded text-black"
-                            onChange={(e) => setMeals(Number(e.target.value))}
-                            required
-                        />
+                        <div className="relative">
+                            <Weight className="absolute left-4 top-4 text-gray-500 h-4 w-4" />
+                            <input
+                                type="number"
+                                placeholder="Weight (kg)"
+                                className="w-full pl-10 p-4 bg-[#13151b] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors"
+                                onChange={(e) => setWeight(Number(e.target.value))}
+                                required
+                            />
+                        </div>
+                        <div className="relative">
+                            <Utensils className="absolute left-4 top-4 text-gray-500 h-4 w-4" />
+                            <input
+                                type="number"
+                                placeholder="Meals/day"
+                                className="w-full pl-10 p-4 bg-[#13151b] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors"
+                                onChange={(e) => setMeals(Number(e.target.value))}
+                                required
+                            />
+                        </div>
                     </div>
 
                     <select
-                        className="w-full p-2 border border-gray-300 rounded text-black"
+                        className="w-full p-4 bg-[#13151b] border border-white/10 rounded-xl text-white focus:outline-none focus:border-indigo-500 transition-colors"
                         value={sex}
                         onChange={(e) => setSex(e.target.value)}
                     >
@@ -126,7 +153,7 @@ export default function Signup() {
                     </select>
 
                     <select
-                        className="w-full p-2 border border-gray-300 rounded text-black"
+                        className="w-full p-4 bg-[#13151b] border border-white/10 rounded-xl text-white focus:outline-none focus:border-indigo-500 transition-colors"
                         value={activityLevel}
                         onChange={(e) => setActivityLevel(e.target.value)}
                     >
@@ -139,18 +166,18 @@ export default function Signup() {
 
                     <button
                         type="submit"
-                        className="w-full bg-orange-500 hover:bg-orange-600 text-white p-2 rounded transition"
+                        className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 rounded-xl font-bold hover:shadow-lg hover:shadow-indigo-600/20 transition-all transform hover:scale-[1.02]"
                     >
-                        Sign Up
+                        Create Account
                     </button>
                 </form>
-                <p className="mt-4 text-center text-gray-600">
+                <div className="mt-6 text-center text-sm text-gray-500">
                     Already have an account?{" "}
-                    <Link href="/login" className="text-orange-500 hover:underline">
+                    <Link href="/login" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
                         Log in
                     </Link>
-                </p>
-            </div>
+                </div>
+            </motion.div>
         </div>
     );
 }

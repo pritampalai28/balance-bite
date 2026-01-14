@@ -4,3 +4,4 @@ pymongo
 firebase-admin
 python-dotenv
 reportlab
+mistralai
